@@ -11781,7 +11781,6 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span>
 <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mannwhitneyu</span>
 <span class="kn">import</span> <span class="nn">plotly.plotly</span> <span class="kn">as</span> <span class="nn">py</span>
-<span class="kn">import</span> <span class="nn">plotly.graph_objs</span> <span class="kn">as</span> <span class="nn">go</span>
 <span class="kn">import</span> <span class="nn">cufflinks</span> <span class="kn">as</span> <span class="nn">cf</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="kn">as</span> <span class="nn">sm</span>
 <span class="kn">from</span> <span class="nn">plotly.tools</span> <span class="kn">import</span> <span class="n">FigureFactory</span> <span class="k">as</span> <span class="n">FF</span>
@@ -12088,7 +12087,7 @@ max      6.000000  512.329200
 <div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
-<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/122.embed" height="525px" width="100%"></iframe>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/126.embed" height="525px" width="100%"></iframe>
 </div>
 
 </div>
@@ -12304,8 +12303,8 @@ distribution, is:
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic_df</span><span class="o">.</span><span class="n">Sex</span><span class="p">,</span> <span class="n">titanic_df</span><span class="o">.</span><span class="n">Survival</span><span class="p">)</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;cufflinks/bar-chart&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survival by Gender&#39;</span><span class="p">,</span>
-                       <span class="n">yTitle</span> <span class="o">=</span> <span class="s1">&#39;Number of Passengers&#39;</span><span class="p">,</span> <span class="n">xTitle</span> <span class="o">=</span> <span class="s1">&#39;Passenger Gender&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic_df</span><span class="o">.</span><span class="n">Survival</span><span class="p">,</span> <span class="n">titanic_df</span><span class="o">.</span><span class="n">Sex</span><span class="p">)</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;cufflinks/bar-chart&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survival by Gender&#39;</span><span class="p">,</span>
+                       <span class="n">yTitle</span> <span class="o">=</span> <span class="s1">&#39;Number of Passengers&#39;</span><span class="p">,</span> <span class="n">xTitle</span> <span class="o">=</span> <span class="s1">&#39;Passenger Survival&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12371,10 +12370,8 @@ distribution, is:
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#calculate Pearson&#39;s r for Age:Survived correlation</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#calculate Mann-Whitney for Age:Survived correlation</span>
 <span class="k">print</span> <span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">alternative</span><span class="o">=</span><span class="s1">&#39;two-sided&#39;</span><span class="p">)</span>
-
-<span class="c1"># print pearsonr(titanic_with_ages_df[&#39;Age&#39;], titanic_with_ages_df[&#39;Survived&#39;])</span>
 </pre></div>
 
 </div>
@@ -12586,7 +12583,7 @@ Dep. Variable:               Survived   No. Observations:                  714
 Model:                          Logit   Df Residuals:                      711
 Method:                           MLE   Df Model:                            2
 Date:                Wed, 05 Oct 2016   Pseudo R-squ.:                  0.1878
-Time:                        00:02:59   Log-Likelihood:                -391.70
+Time:                        19:40:58   Log-Likelihood:                -391.70
 converged:                       True   LL-Null:                       -482.26
                                         LLR p-value:                 4.691e-40
 ==============================================================================
