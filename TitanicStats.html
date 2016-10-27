@@ -11936,7 +11936,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#Survived is a binary, mapping it to a string for display purposes</span>
@@ -11989,7 +11989,6 @@ max      6.000000  512.329200
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Out of the approximately 1,317 people on the Titanic at the time of the accident, the Kaggle data used in this project contains 891 people.  This is 67.65% of the passengers.  Out of these, 342 were survivors.  Surprisingly, this means that out of the data available in Kaggle, 38% were survivors.  However, the estimated passenger counts show 53% of the passengers survived.</p>
-<p>Because the data set is incomplete in relation to passenger ages, all analysis regarding age will be on the set of data where age is present.</p>
 
 </div>
 </div>
@@ -12093,7 +12092,7 @@ max      6.000000  512.329200
 <div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
-<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/132.embed" height="525px" width="100%"></iframe>
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/136.embed" height="525px" width="100%"></iframe>
 </div>
 
 </div>
@@ -12198,10 +12197,10 @@ max      6.000000  512.329200
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To test whether there is a correlation between Titanic passenger gender and survival, $\chi^2$ is appropriate as gender is a nominal variable.</p>
-<p>$H_{0}:\mu_{f}=\mu_{m} $</p>
+<p>$H_{0}: $ Gender and survival are independent.</p>
 <p>The null hypothesis for the correlation between gender and survival, $H_{0}$, is there will be no difference between survival rates for passengers based on gender.</p>
-<p>$H_{s}: \mu_{f}>\mu_{m}$</p>
-<p>The alternative hypothesis, $H_{s}$, is there will be a higher survival rate for female passengers than for male passengers.</p>
+<p>$H_{s}: $ Gender and survival are not independent.</p>
+<p>The alternative hypothesis, $H_{s}$, is there will be a difference in the  survival rates for female passengers and male passengers.</p>
 <p>To prove the null hypothesis, a mininum 95% probability or 0.05 p-value threshold will be held.</p>
 
 </div>
@@ -12209,7 +12208,7 @@ max      6.000000  512.329200
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#create a frequency distribution table to analyze sex:survival</span>
@@ -12362,12 +12361,11 @@ distribution, is:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Age">Age<a class="anchor-link" href="#Age">&#182;</a></h2><p>$H_{0}:\mu_{a}=\mu_{y} $</p>
-<p>The null hypothesis, $H_{0}$, is there will be no difference between survival rates for passengers based on age.</p>
-<p>$H_{a}: \mu_{a}<\mu_{y}$</p>
-<p>The alternative hypothesis, $H_{a}$, is there will be a higher survival rate for younger passengers than for adult passengers.</p>
+<h2 id="Age">Age<a class="anchor-link" href="#Age">&#182;</a></h2><p>$H_{0}:\mu_{as}=\mu_{ad} $</p>
+<p>The null hypothesis, $H_{0}$, is there will be no difference in distribution of age between those who survived and those who did not.</p>
+<p>$H_{a}: \mu_{as}\neq\mu_{ad}$</p>
+<p>The alternative hypothesis, $H_{a}$, is there is a difference in distribution of age between those who survived and those who did not.</p>
 <p>To prove the null hypothesis, a mininum 95% probability or 0.05 p-value threshold will be held.</p>
-<p>Because the age data is incomplete, we'll limit the data to what contains age and compare that to survival:</p>
 
 </div>
 </div>
@@ -12379,9 +12377,6 @@ distribution, is:
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#add a binary gender for line purposes</span>
 <span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;SexBinary&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
-
-<span class="c1">#filter data to non-NaN age data</span>
-<span class="n">titanic_with_ages_df</span> <span class="o">=</span> <span class="n">titanic_df</span><span class="p">[</span><span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span>
 </pre></div>
 
 </div>
@@ -12394,18 +12389,20 @@ distribution, is:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Because age is an ordinal variable, the Mann-Whitney test is an appropriate measurement of the probability that an observation of the survival rate of the population of a certain age would be equal to the survival rate of the general population.</p>
+<p>Because age is an ordinal variable, the Mann-Whitney test is an appropriate measurement of the probability that the age distribution of the survived group and the age distribution of the deceased group are similar.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#calculate Mann-Whitney for Age:Survived correlation</span>
-<span class="k">print</span> <span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">titanic_df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">alternative</span><span class="o">=</span><span class="s1">&#39;two-sided&#39;</span><span class="p">)</span>
+<span class="c1"># print mannwhitneyu(titanic_df[&#39;Age&#39;], titanic_df[&#39;Survived&#39;], alternative=&#39;one-sided&#39;)</span>
+<span class="c1"># print mannwhitneyu(titanic.Age[titanic.Survived == 0], titanic.Age[titanic.Survived == 1], alternative = &#39;one-sided&#39;)</span>
+<span class="k">print</span> <span class="n">mannwhitneyu</span><span class="p">(</span><span class="n">titanic_df</span><span class="o">.</span><span class="n">Age</span><span class="p">[</span><span class="n">titanic_df</span><span class="o">.</span><span class="n">Survived</span> <span class="o">==</span> <span class="mi">1</span><span class="p">],</span> <span class="n">titanic_df</span><span class="o">.</span><span class="n">Age</span><span class="p">[</span><span class="n">titanic_df</span><span class="o">.</span><span class="n">Survived</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">alternative</span> <span class="o">=</span> <span class="s1">&#39;two-sided&#39;</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12418,7 +12415,7 @@ distribution, is:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>MannwhitneyuResult(statistic=790290.0, pvalue=4.2195654324180847e-298)
+<pre>MannwhitneyuResult(statistic=81592.0, pvalue=0.0010043084429263943)
 </pre>
 </div>
 </div>
@@ -12440,11 +12437,11 @@ distribution, is:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#Create grouped data to display the number of Survivors/Victims by Age</span>
-<span class="n">titanic_groupby_age_survived</span> <span class="o">=</span> <span class="n">titanic_with_ages_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Survival&#39;</span><span class="p">])</span>
+<span class="n">titanic_groupby_age_survived</span> <span class="o">=</span> <span class="n">titanic_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Survival&#39;</span><span class="p">])</span>
 
 <span class="c1">#unstack the data so it will show in &#39;two&#39; stacked graphs</span>
 <span class="n">titanic_survival_age</span> <span class="o">=</span> <span class="n">titanic_groupby_age_survived</span><span class="p">[</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
@@ -12457,7 +12454,7 @@ distribution, is:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">titanic_survival_age</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;histogram&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;cufflinks/customized-histogram&#39;</span><span class="p">,</span>
@@ -12475,7 +12472,7 @@ distribution, is:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">Out[27]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/120.embed" height="525px" width="100%"></iframe>
@@ -12500,7 +12497,7 @@ distribution, is:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">make_subplots</span><span class="p">(</span><span class="n">rows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">cols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">shared_xaxes</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">subplot_titles</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;Age and Survival for Female Titanic Passengers&#39;</span><span class="p">,</span>
@@ -12543,7 +12540,7 @@ distribution, is:
 </div>
 </div>
 
-<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[22]:</div>
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/108.embed" height="525px" width="100%"></iframe>
@@ -12571,11 +12568,20 @@ distribution, is:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For example, we will compare age, sex, and passenger class to the survival of each passenger who has a reported age.  Perhaps passenger survival was akin to the blockbuster movie Titanic, and the wealthier passengers had a better rate at survival than the lower-class passengers.</p>
-<p>$H_{0}: \mu_{uc}=\mu_{lc}$</p>
-<p>Taking the passenger's class into account, a new null hypothesis will be that the upper-class passengers, $\mu_{uc}$, would have the same survival rate as the lower-class passengers, $\mu_{lc}$, while accounting for passenger age and gender.</p>
-<p>$H_{c}: \mu_{uc}>\mu_{lc}$</p>
-<p>The alternative hypothesis, $\mu_{c}$, is that the survival rate of upper-class passengers is higher than the survival rate of lower-class passengers.</p>
+<h2 id="Passenger-Class">Passenger Class<a class="anchor-link" href="#Passenger-Class">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For example, we will compare survival between the different passenger classes.  Perhaps passenger survival was akin to the blockbuster movie Titanic, and the wealthier passengers had a better rate at survival than the lower-class passengers.</p>
+<p>$H_{0}: $ Passenger class and survival are independent.</p>
+<p>Taking the passenger's class into account, a new null hypothesis will be that the upper-class passengers would have the same survival rate as the lower-class passengers.</p>
+<p>$H_{c}: $ Passenger class and survival are not independent.</p>
+<p>The alternative hypothesis, $\mu_{c}$, is that the survival rate of passengers is different among the passenger classes.</p>
 <p>The p-value to prove the null hypothesis will hold at 0.05.</p>
 
 </div>
@@ -12586,20 +12592,29 @@ distribution, is:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For this hypothesis, the dependent variable is survival and the independent variables are age, sex, and passenger class.</p>
-<p>Because survival is a categorical variable, logistic regression is an appopriate test to determine whether the independent variables of age, sex, and passenger class, had a statistically significant influence on the dependent variable of passenger survival.</p>
+<p>For this hypothesis, the dependent variable is survival and the independent variable is passenger class.</p>
+<p>Because survival is a categorical variable, a chi-squared test is an appropriate test to determine whether passenger class had a statistically significant influence on the dependent variable of passenger survival.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">logit</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">Logit</span><span class="p">(</span><span class="n">titanic_with_ages_df</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">titanic_with_ages_df</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span> <span class="s1">&#39;SexBinary&#39;</span><span class="p">,</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]])</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">logit</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-<span class="k">print</span> <span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1">#create a frequency distribution table to analyze passenger class:survival</span>
+<span class="n">class_survival_tab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic_df</span><span class="o">.</span><span class="n">Survival</span><span class="p">,</span> <span class="n">titanic_df</span><span class="o">.</span><span class="n">Pclass</span><span class="p">)</span>
+<span class="k">print</span> <span class="s2">&quot;The actual frequency distribution table for passenger class and survival is:&quot;</span>
+<span class="k">print</span> <span class="n">class_survival_tab</span>
+
+<span class="c1">#calculate chi squared to test for a correlation between passenger class and survival:</span>
+<span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">ddof</span><span class="p">,</span> <span class="n">expected</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">class_survival_tab</span><span class="p">)</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\n</span><span class="s2">At {} degree of freedom, chi squared with Yates&#39; correction for continuity is {}. </span>
+<span class="s2">The p-value for this outcome is {}.</span>
+<span class="se">\n</span><span class="s2">The expected values if there were no correlation between passenger class and survival, also known as the expected bivariate </span>
+<span class="s2">distribution, is:</span><span class="se">\n</span><span class="s2">{}&quot;&quot;&quot;</span>
+<span class="k">print</span> <span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ddof</span><span class="p">,</span><span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12612,25 +12627,19 @@ distribution, is:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Optimization terminated successfully.
-         Current function value: 0.548600
-         Iterations 5
-                           Logit Regression Results                           
-==============================================================================
-Dep. Variable:               Survived   No. Observations:                  714
-Model:                          Logit   Df Residuals:                      711
-Method:                           MLE   Df Model:                            2
-Date:                Wed, 26 Oct 2016   Pseudo R-squ.:                  0.1878
-Time:                        00:44:20   Log-Likelihood:                -391.70
-converged:                       True   LL-Null:                       -482.26
-                                        LLR p-value:                 4.691e-40
-==============================================================================
-                 coef    std err          z      P&gt;|z|      [95.0% Conf. Int.]
-------------------------------------------------------------------------------
-Age            0.0242      0.005      5.335      0.000         0.015     0.033
-SexBinary     -2.0429      0.185    -11.049      0.000        -2.405    -1.681
-Pclass        -0.0402      0.063     -0.635      0.525        -0.164     0.084
-==============================================================================
+<pre>The actual frequency distribution table for passenger class and survival is:
+Pclass      1   2    3
+Survival              
+Survivor  136  87  119
+Victim     80  97  372
+
+At 2 degree of freedom, chi squared with Yates&#39; correction for continuity is 102.888988757. 
+The p-value for this outcome is 4.5492517113e-23.
+
+The expected values if there were no correlation between passenger class and survival, also known as the expected bivariate 
+distribution, is:
+[[  82.90909091   70.62626263  188.46464646]
+ [ 133.09090909  113.37373737  302.53535354]]
 </pre>
 </div>
 </div>
@@ -12644,7 +12653,46 @@ Pclass        -0.0402      0.063     -0.635      0.525        -0.164     0.084
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The probability of the survival outcomes if age and sex had no effect are below .0005 and are therefore extremely statistically significant.  However, the probabilty of obtaining this survival rate if passenger class had no effect is .5 and therefore not statistically significant.  By this measure, it is highly unlikely that passenger class was a common-causal variable for the correlations between sex, age, and survival.</p>
+<p>The probability of the survival outcome if passenger class had no effect is below .001 and extremely statistically significant.</p>
+<p>The below chart shows the visual difference between survival rates between passenger classes.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">class_survival_tab</span><span class="o">.</span><span class="n">iplot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;cufflinks/bar-chart&#39;</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Survival by Passenger Class&#39;</span><span class="p">,</span>
+                       <span class="n">yTitle</span> <span class="o">=</span> <span class="s1">&#39;Number of Passengers&#39;</span><span class="p">,</span> <span class="n">xTitle</span> <span class="o">=</span> <span class="s1">&#39;Passenger Class&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[28]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src="https://plot.ly/~jennis/7.embed" height="525px" width="100%"></iframe>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>There are many measures in this data, and there are other variables that could be a common-causal variable to explain the correlations shown above.  For example, passengers who were physically located further away from life rafts at the time of the call to evacuate the ship could have had a lower chance of survival due to the limited rafts.  Although we may never know exactly what would have caused any given passenger to survive that evening, the data does provide an interesting look into the effect maritime customs would have on survival rates for passengers.</p>
 
 </div>
